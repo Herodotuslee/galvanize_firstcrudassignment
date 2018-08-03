@@ -23,10 +23,26 @@ app.get("/all",function(req,res){
 app.post("/create", function(req, res){
 
   let user = req.body.user;
+  let name =req.params.name
 
-  allUsers.push(user);
+
+// FOR CHECKING SAME USER NAME
+  function checkUni(){
+    for(let i=0;i<allUsers.length;i++){
+      if(allUsers[i].name===req.body.user.name){
+        console.log('same')
+        res.send('User name already exist')
+          return;
+        }
+    }
+      allUsers.push(user);
+      res.send('No one is same as your name')
+    }
+
+
+  checkUni(allUsers)
   fs.writeFileSync('./storage.json',JSON.stringify(allUsers), allUsers)
-  res.sendStatus(200);
+
 })
 
 
@@ -53,10 +69,8 @@ app.put("/update/:name",function(req,res){
   let user = req.body.user;
   let upDate = allUsers.map(item =>{
    if(item.name === name){
-     // console.log('equal')
      return item=user;
    } else{
-     // console.log('not equal')
      return item=item;
    }
 
@@ -78,7 +92,10 @@ app.delete('/users/:name', function(req, res) {
 });
 
 
-
+// IF YOUR HTML IS INVALID SENT 404
+app.use(function(req, res) {
+  res.sendStatus(404);
+});
 
 app.listen(port, function() {
   console.log('Listening on', port);
