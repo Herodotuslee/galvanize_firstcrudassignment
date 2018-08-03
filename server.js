@@ -1,11 +1,11 @@
-const  express = require('express'),
-          app = express(),
-          port = process.env.PORT || 8000,
-          bodyParser = require('body-parser'),
-          fs = require('fs');
+const  express        = require('express'),
+          app         = express(),
+          port        = process.env.PORT || 8000,
+          bodyParser  = require('body-parser'),
+          fs          = require('fs');
 
-let data = fs.readFileSync('./storage.json', 'utf-8')
-let allUsers= JSON.parse(data);
+const  data = fs.readFileSync('./storage.json', 'utf-8')
+const allUsers= JSON.parse(data);
 
 
 // MIDDLEWARE
